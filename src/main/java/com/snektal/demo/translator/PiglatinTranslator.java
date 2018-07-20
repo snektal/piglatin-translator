@@ -6,9 +6,11 @@ import java.util.stream.Stream;
 public class PiglatinTranslator {
 
     static final String SPACE_DELIMITER = " ";
+    static final String PIG_LATIN_SUFFIX = "ay";
 
+    private PiglatinTranslator() {}
 
-    public String translate(String input) {
+    public static String translate(String input) {
 
         String[] words = input.split(" ");
         StringBuilder sb = new StringBuilder();
@@ -21,23 +23,23 @@ public class PiglatinTranslator {
         return sb.toString();
     }
 
-    public String translateJava8Style(String input) {
-        return Stream.of(input.split(SPACE_DELIMITER)).map(i-> translateAWord(i)).collect(Collectors.joining(SPACE_DELIMITER));
+    public static String translateJava8Style(String input) {
+        return Stream.of(input.split(SPACE_DELIMITER)).map(PiglatinTranslator::translateAWord).collect(Collectors.joining(SPACE_DELIMITER));
     }
 
-    private String translateAWord(String word) {
+    private static String translateAWord(String word) {
         String translated;
         boolean isFirstLetterCapital = isFirstLetterCapital(word);
 
         if (isStartWithConsonant(word)) {
-            translated = word.substring(1).concat(String.valueOf(word.charAt(0))).concat("ay");
+            translated = word.substring(1).concat(String.valueOf(word.charAt(0))).concat(PIG_LATIN_SUFFIX);
         } else {
-            translated = word.concat("ay");
+            translated = word.concat(PIG_LATIN_SUFFIX);
         }
         return capitalizeFirstLetter(translated, isFirstLetterCapital);
     }
 
-    private String capitalizeFirstLetter(String input, boolean isFirstLetterCapital) {
+    private static String capitalizeFirstLetter(String input, boolean isFirstLetterCapital) {
 
         if (!isFirstLetterCapital) {
             return input;
@@ -47,7 +49,7 @@ public class PiglatinTranslator {
 
     }
 
-    private boolean isFirstLetterCapital(String word) {
+    private static boolean isFirstLetterCapital(String word) {
 
         String firstCapital = String.valueOf(word.charAt(0)).toUpperCase();
         String firstActual = String.valueOf(word.charAt(0));
@@ -55,7 +57,7 @@ public class PiglatinTranslator {
 
     }
 
-    private boolean isStartWithConsonant(String word) {
+    private static boolean isStartWithConsonant(String word) {
 
         return !(word.startsWith("a") || word.startsWith("o") ||
                 word.startsWith("i") ||

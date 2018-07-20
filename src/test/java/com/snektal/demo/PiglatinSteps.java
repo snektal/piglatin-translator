@@ -18,8 +18,7 @@ public class PiglatinSteps {
 
     @When("^we translate it$")
     public void weTranslateIt() throws Exception {
-        PiglatinTranslator translator = new PiglatinTranslator();
-        output = translator.translateJava8Style(input);
+        output = PiglatinTranslator.translateJava8Style(input);
 
     }
 
